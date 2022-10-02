@@ -8,5 +8,5 @@ app.listen(process.env.PORT || 5000, () => {
 })
 
 app.get("/", (req, res) => {
-    res.send("Hello")
+    res.send("Hello World")
 })
