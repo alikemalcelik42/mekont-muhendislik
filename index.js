@@ -3,7 +3,6 @@ const _ = require("lodash")
 const morgan = require("morgan")
 const mongoose = require('mongoose');
 const Data = require("./models/datas");
-const Data = require("./models/datas");
 
 const uri = "mongodb+srv://alikemalcelik:9711565aA@mekont-muhendislik.lhsx6v6.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -32,13 +31,13 @@ app.get("/all", (req, res) => {
         })
 })
 
-app.get("/add/<str:data>", (req, res) => {
+app.get("/add/:data", (req, res) => {
     const data = new Data({
         data: req.params.data
     })
 
     data.save()
-        .then((reslut) => {
+        .then((result) => {
             res.send(result)
         })
         .catch((err) => {
