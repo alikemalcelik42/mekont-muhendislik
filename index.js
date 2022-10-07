@@ -27,7 +27,7 @@ app.get("/all", (req, res) => {
             res.send(result)
         })
         .catch((err) => {
-            console.log(err)
+            res.send(err)
         })
 })
 
@@ -41,7 +41,7 @@ app.get("/add/:data", (req, res) => {
             res.send(result)
         })
         .catch((err) => {
-            console.log(err)
+            res.send(err)
         })
 })
 
