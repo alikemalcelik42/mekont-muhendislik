@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.get("/all", (req, res) => {
     Data.find()
         .then((result) => {
-            res.send(result)
+            res.render("all", {"title": "Bütün Veriler", "datas": result})
         })
         .catch((err) => {
             res.send(err)
@@ -38,7 +38,7 @@ app.get("/add/:data", (req, res) => {
 
     data.save()
         .then((result) => {
-            res.send(result)
+            res.redirect("/all")
         })
         .catch((err) => {
             res.send(err)
