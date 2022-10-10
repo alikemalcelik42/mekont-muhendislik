@@ -2,48 +2,26 @@ const express = require("express")
 const _ = require("lodash")
 const morgan = require("morgan")
 const mongoose = require('mongoose');
-const Data = require("./models/datas");
+const authRoutes = require("./routes/authRoutes")
 
 const uri = "mongodb+srv://alikemalcelik:9711565aA@mekont-muhendislik.lhsx6v6.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => console.log("Connection succesfull."))
+    .then((result) => app.listen(process.env.PORT || 5000))
     .catch((err) => console.log(err))
 
 const app = express()
-app.use(express.static("public"))
+
 app.set("view engine", "ejs")
 
+app.use(express.static("public"))
+app.use(express.urlencoded({ extended: true }))
 app.use(morgan("tiny"))
-
-app.listen(process.env.PORT || 5000)
 
 app.get("/", (req, res) => {
     res.render("index", {"title": "Anasayfa"})
 })
 
-app.get("/all", (req, res) => {
-    Data.find()
-        .then((result) => {
-            res.render("all", {"title": "Bütün Veriler", "datas": result})
-        })
-        .catch((err) => {
-            res.send(err)
-        })
-})
-
-app.get("/add/:data", (req, res) => {
-    const data = new Data({
-        data: req.params.data
-    })
-
-    data.save()
-        .then((result) => {
-            res.redirect("/all")
-        })
-        .catch((err) => {
-            res.send(err)
-        })
-})
+app.use("/auth", authRoutes)
 
 app.get("/about", (req, res) => {
     res.render("about", {"title": "Hakkımızda"})
